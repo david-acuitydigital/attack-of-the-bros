@@ -1,9 +1,5 @@
-import os
-
 import math
-
-
-
+import os
 
 
 def main():
