@@ -4,3 +4,11 @@
     entry: pre-commit-validate-manifest
     language: python
     files: ^(\.pre-commit-hooks\.yaml|hooks\.yaml)$
+-   id: autopep8
+    name: autopep8
+    entry: autopep8
+    language: python
+    'types': [python]
+    args: ["-i"]
+    require_serial: false
+    additional_dependencies: []
