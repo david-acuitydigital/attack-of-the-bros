@@ -13,4 +13,4 @@ if [[ -z "${STATE}" ]] || [[ -z "${COMMIT}" ]] || [[ -z "${REPO_USER}" ]] || [[ 
   exit 1
 fi
 
-curl -s -u ${REPO_USER}:${REPO_PASSWORD} -X POST --header "Content-Type: application/json" --data "{\"state\": \"${STATE}\", \"target_url\": \"${BUILD_URL}\", \"context\": \"${CONTEXT}\"}" ${GITHUB_URL}/${COMMIT}
+curl -s -H "Authorization: token ${REPO_PASSWORD}" -X POST --header "Content-Type: application/json" --data "{\"state\": \"${STATE}\", \"target_url\": \"${BUILD_URL}\", \"context\": \"${CONTEXT}\"}" ${GITHUB_URL}/${COMMIT}
