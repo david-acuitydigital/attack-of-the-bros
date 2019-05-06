@@ -1,8 +1,9 @@
 #!/bin/sh
 if [[ -z "${GIT_TOKEN}" ]] ; then
-  echo "Please set the GIT_TOKEN"
+  echo "Please run 'export GIT_TOKEN=<your git token>' before running script"
   exit 1
 fi
+
 protect () {
     OWNER=${1}
     REPO=${2}
@@ -10,7 +11,6 @@ protect () {
     GITHUB_URL=https://api.github.com
     URL="${GITHUB_URL}/repos/${OWNER}/${REPO}/branches/${BRANCH}"
     echo "==============================================================================================================="
-    echo "GIT_TOKEN . . . : ${GIT_TOKEN: 0:1}********${GIT_TOKEN: -2:2}"
     echo "OWNER . . . . . : ${OWNER}"
     echo "REPO  . . . . . : ${REPO}"
     echo "BRANCH  . . . . : ${BRANCH}"
@@ -54,7 +54,6 @@ default_branch () {
     BRANCH=${3}
     GITHUB_URL=https://api.github.com
     URL="${GITHUB_URL}/repos/${OWNER}/${REPO}"
-    echo "GIT_TOKEN . . . : ${GIT_TOKEN: 0:1}********${GIT_TOKEN: -2:2}"
     echo "OWNER . . . . . : ${OWNER}"
     echo "REPO  . . . . . : ${REPO}"
     echo "BRANCH  . . . . : ${BRANCH}"
@@ -82,6 +81,12 @@ update_repo() {
     default_branch ${1} ${2} dev
 }
 
+curl -H "Authorization: token ${GIT_TOKEN}" -s "https://api.github.com/orgs/CenturyLinkCloud/repos?type=member&sort=full_name&direction=asc&page=16" | jq -r '.[] | "update_repo ${REPO_OWNER} \(.name)"' | grep mos > mos-repos.txt
+curl -H "Authorization: token ${GIT_TOKEN}" -s "https://api.github.com/orgs/CenturyLinkCloud/repos?type=member&sort=full_name&direction=asc&page=17" | jq -r '.[] | "update_repo ${REPO_OWNER} \(.name)"' | grep mos >> mos-repos.txt
+curl -H "Authorization: token ${GIT_TOKEN}" -s "https://api.github.com/orgs/CenturyLinkCloud/repos?type=member&sort=full_name&direction=asc&page=18" | jq -r '.[] | "update_repo ${REPO_OWNER} \(.name)"' | grep mos >> mos-repos.txt
+curl -H "Authorization: token ${GIT_TOKEN}" -s "https://api.github.com/orgs/CenturyLinkCloud/repos?type=member&sort=full_name&direction=asc&page=19" | jq -r '.[] | "update_repo ${REPO_OWNER} \(.name)"' | grep mos >> mos-repos.txt
+curl -H "Authorization: token ${GIT_TOKEN}" -s "https://api.github.com/orgs/CenturyLinkCloud/repos?type=member&sort=full_name&direction=asc&page=20" | jq -r '.[] | "update_repo ${REPO_OWNER} \(.name)"' | grep mos >> mos-repos.txt
+
 REPO_OWNER=CenturyLinkCloud
 
 update_repo ${REPO_OWNER} mos-active-directory-service
@@ -103,7 +108,7 @@ update_repo ${REPO_OWNER} mos-gateway-api
 update_repo ${REPO_OWNER} mos-gateway-change-listener
 update_repo ${REPO_OWNER} mos-managed-application-create-listener
 update_repo ${REPO_OWNER} mos-managed-server-service
-update_repo ${REPO_OWNER} mos-missing_recon_metric
+update_repo ${REPO_OWNER} mos-missing-recon-metric
 update_repo ${REPO_OWNER} mos-monitoring-configuration-listener
 update_repo ${REPO_OWNER} mos-monitoring-policy-service
 update_repo ${REPO_OWNER} mos-network-services
@@ -122,19 +127,20 @@ update_repo ${REPO_OWNER} mos-watcher-listener
 update_repo ${REPO_OWNER} mos-webhook-service
 
 # Skipped Repositories
-#update_repo ${REPO_OWNER} mos-documentation
-#update_repo ${REPO_OWNER} mos-elasticbox
-#update_repo ${REPO_OWNER} mos-end-to-end-testing
-#update_repo ${REPO_OWNER} mos-etcd-config-utility
-#update_repo ${REPO_OWNER} mos-event-enrichment-api
-#update_repo ${REPO_OWNER} mos-kubernetes-infrastructure
-#update_repo ${REPO_OWNER} mos-micro-services
-#update_repo ${REPO_OWNER} mos-monitoring
-#update_repo ${REPO_OWNER} mos-pyutils
-#update_repo ${REPO_OWNER} mos-remote-admin-service
-#update_repo ${REPO_OWNER} mos-reconciliation-listener
-#update_repo ${REPO_OWNER} mos-sddc
-#update_repo ${REPO_OWNER} mos-server-update-webhook
-#update_repo ${REPO_OWNER} mos-spi-poc
-#update_repo ${REPO_OWNER} mos-server-update-listener
-#update_repo ${REPO_OWNER} mos-vpn-hub-api
+# mos-documentation
+# mos-elasticbox
+# mos-end-to-end-testing
+# mos-etcd-config-utility
+# mos-event-enrichment-api
+# mos-kubernetes-infrastructure
+# mos-micro-services
+# mos-missing_recon_metric
+# mos-monitoring
+# mos-pyutils
+# mos-remote-admin-service
+# mos-reconciliation-listener
+# mos-sddc
+# mos-server-update-webhook
+# mos-spi-poc
+# mos-server-update-listener
+# mos-vpn-hub-api
